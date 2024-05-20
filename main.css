@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #3a9bdc;
+}
+
+#ui {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#resources, #upgrades, #settlements, #buildings {
+    margin-top: 10px;
+}
+
+button {
+    margin-top: 5px;
+    padding: 5px;
+}
