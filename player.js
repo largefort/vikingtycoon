@@ -10,10 +10,11 @@ class PlayerEntity extends me.Entity {
             frameheight: 64
         });
 
+        // Initialize resources with starter values
         this.resources = {
-            wood: 0,
-            stone: 0,
-            gold: 0
+            wood: settings.starterResources?.wood || 0,
+            stone: settings.starterResources?.stone || 0,
+            gold: settings.starterResources?.gold || 0
         };
 
         this.name = "Viking";
@@ -21,6 +22,9 @@ class PlayerEntity extends me.Entity {
             speed: 1,
             strength: 1
         };
+
+        // Update UI with starter resources
+        this.updateUI();
     }
 
     collectResource(resource) {
