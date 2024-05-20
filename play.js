@@ -1,16 +1,19 @@
 import * as me from 'melonjs';
-import PlayerEntity from '../entities/player.js';
-import ResourceEntity from '../entities/resource.js';
-import BuildingEntity from '../entities/building.js';
-import SettlementEntity from '../entities/settlement.js';
+import PlayerEntity from '/entities/player.js';
+import ResourceEntity from '/entities/resource.js';
+import BuildingEntity from '/entities/building.js';
+import SettlementEntity from '/entities/settlement.js';
 
 class PlayScreen extends me.Stage {
     onResetEvent() {
+        // Set the background color
         me.game.world.addChild(new me.ColorLayer("background", "#3a9bdc"), 0);
 
+        // Add initial player entity with starter resources
         this.players = [];
-        this.addPlayer();
+        this.addPlayer({ wood: 200, stone: 200, gold: 200 });
 
+        // Add resource entities
         this.resources = [];
         this.addResource("wood", 100, 100);
         this.addResource("stone", 200, 100);
@@ -19,20 +22,23 @@ class PlayScreen extends me.Stage {
         this.settlements = [];
         this.buildings = [];
 
+        // Register entities in the pool
         me.pool.register("player", PlayerEntity);
         me.pool.register("resource", ResourceEntity);
         me.pool.register("building", BuildingEntity);
         me.pool.register("settlement", SettlementEntity);
 
+        // Start the game loop
         me.timer.setInterval(this.collectResources.bind(this), 1000);
 
+        // Set up UI
         document.getElementById("hire-viking").addEventListener("click", this.hireViking.bind(this));
         document.getElementById("build-settlement").addEventListener("click", this.buildSettlement.bind(this));
         document.getElementById("build-farm").addEventListener("click", this.buildFarm.bind(this));
     }
 
-    addPlayer() {
-        let player = me.pool.pull("player", 100, 100);
+    addPlayer(starterResources) {
+        let player = me.pool.pull("player", 100, 100, { starterResources: starterResources });
         this.players.push(player);
         me.game.world.addChild(player, 1);
     }
@@ -80,6 +86,7 @@ class PlayScreen extends me.Stage {
     }
 
     onDestroyEvent() {
+        // Remove the players and resources
         this.players.forEach(player => me.game.world.removeChild(player));
         this.resources.forEach(resource => me.game.world.removeChild(resource));
         this.settlements.forEach(settlement => me.game.world.removeChild(settlement));
