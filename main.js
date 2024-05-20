@@ -1,5 +1,5 @@
 import * as me from 'melonjs';
-import PlayScreen from './js/screens/play.js';
+import PlayScreen from 'js/screens/play.js';
 
 me.device.onReady(function() {
     // Initialize the video
